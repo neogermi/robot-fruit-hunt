@@ -60,18 +60,33 @@ var GamePlay = {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("You win!", 0, 275);
+                   console.log("You win!");
                }
                if (score < 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("You lose!", 0, 275);
+                   console.log("You lose!");
                }
                if (score == 0) {
                    ctx.font = "30px Arial";
                    ctx.fillStyle = "#000";
                    ctx.fillText("You tie!", 0, 275);
+                   console.log("You tie!");
                }
                GamePlay.mode = "pause";
+               var query = {};
+               location.search.replace( /[A-Z0-9]+?=(\w*)/gi, function(a) {
+            	   query[ a.split( '=' ).shift() ] = a.split( '=' ).pop();
+               });
+               if (query.indef) {
+            	   setTimeout(function () {
+                	   GamePlay.setupNewGame();
+                	   GamePlay.mode = "play"; 
+                	   Board.processMove(); 
+                	   GamePlay.draw();
+            	   }, 2000);
+               }
                return;
            }
            Board.processMove();
@@ -83,7 +98,7 @@ var GamePlay = {
     displayScore: function(ctx, state) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "#366B76";
-        ctx.fillText("My Bot", 0, 50);
+        ctx.fillText("Germi's Bot", 0, 50);
         ctx.font = "15px Arial";
         ctx.fillStyle = "#000";
         for (var i=0; i<GamePlay.itemTypeCount; i++) {
